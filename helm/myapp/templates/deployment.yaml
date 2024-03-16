@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets.name }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          resources:
+            requests:
+              cpu: "{{ .Values.resources.cpu }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+         # {{- if .Values.livenessProbe.enabled }}
+         # livenessProbe:
+           # exec:
+            #  command:
+             #   - /bin/sh
+              #  - -c
+               # - ps aux | grep node
+           # initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+           # periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+         # {{- end }}
+         # {{- if .Values.readinessProbe.enabled }}
+          #readinessProbe:
+            #tcpSocket:
+          #    port: {{ .Values.service.port }}
+           # initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+           # periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+         # {{- end }}

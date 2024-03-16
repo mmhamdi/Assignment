@@ -1,0 +1,41 @@
+# values.yaml
+namespace: myapp-ns
+
+replicaCount: 2
+
+image:
+  repository: moha1992/myapp
+  tag: v1
+  pullPolicy: IfNotPresent
+imagePullSecrets:
+  name: mycred
+containerPort: 3000
+
+resources:
+  cpu: "10m"
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+service:
+  port: 80
+  targetPort: 3000
+  protocol: TCP
+  type: LoadBalancer
+
+ingress:
+  host: myapp.com
+  servicePort: 80
+
+hpa:
+  namespace: myapp-ns
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 20

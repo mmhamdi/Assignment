@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
  # Service name
+ namespace: myapp-ns
  name: notes-app-deployment
 spec:
  selector:

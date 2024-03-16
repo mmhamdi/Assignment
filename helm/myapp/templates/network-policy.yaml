@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: notes-app-network-policy
+  namespace: {{ .Values.namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: notes-app
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from: 
+        - podSelector:
+            matchLabels:
+              app: load-generator
+  egress:
+    - to: 
+        - podSelector:
+            matchLabels:
+              app: load

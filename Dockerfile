@@ -13,6 +13,8 @@ RUN npm install
 # Copy all files to the container
 COPY . .
 
+
+RUN touch /tmp/ready /tmp/healthy
 # Expose port 3000
 EXPOSE 3000
 
