@@ -20,7 +20,7 @@ Before installing any software, you need to update and upgrade the system you ar
 ```bash
 sudo apt-get update -y
 sudo apt-get upgrade -y
-
+´´´´bash
 Updating the software package list on Ubuntu.
 Also, make sure to install (or check whether you already have) the following required packages:
 
