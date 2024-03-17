@@ -18,15 +18,15 @@ To install Minikube on Ubuntu, follow the steps outlined below. Besides installa
 Before installing any software, you need to update and upgrade the system you are working on. To do so, run the commands:
 
 ```bash
-sudo apt-get update -y
-sudo apt-get upgrade -y
-´´´´bash
+#sudo apt-get update -y
+#sudo apt-get upgrade -y
+
 Updating the software package list on Ubuntu.
 Also, make sure to install (or check whether you already have) the following required packages:
 
 ```bash
-sudo apt-get install curl
-sudo apt-get install apt-transport-https
+#sudo apt-get install curl
+#sudo apt-get install apt-transport-https
 
 
 - [Usage](#usage)
