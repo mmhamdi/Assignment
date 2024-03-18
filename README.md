@@ -137,6 +137,9 @@ The Jenkins service will launch automatically following installation:
 <img src="images/jenkinsstaus.PNG" alt="image" width="900" height="400">
 </p>
 
+
+##Usage
+
 ### Containerizing my application :
 
 Containerizing a Node.js application involves packaging the application along with its dependencies, libraries, and runtime environment into a container.
@@ -353,21 +356,83 @@ spec:
 
 This Horizontal Pod Autoscaler (HPA) automatically adjusts the number of pods in our notes-app-deployment based on CPU consumption. If CPU usage exceeds 20%, it scales up to a maximum of 5 pods. If usage drops below 20%, it scales down to a minimum of 2 pods. This ensures our application can handle varying levels of traffic efficiently
 
-_Senario:_
+*Senario:*
 
 So, here's the setup: I've deployed a load generator pod (load-generator-deployment) in the myapp-ns namespace. This pod continuously generates HTTP requests to our application pods (notes-app-deployment), creating a load on them.
 
 When I applied the load generator, I observed that the application scaled up automatically to accommodate the increased demand. Initially, we had 2 pods running, but as the load increased, Kubernetes dynamically scaled up the number of pods to 5 to handle the additional traffic.
 
 <p align="center">
-<img src="images/hpatest.PNG" alt="image" width="800" height="300">
+<img src="images/hpatest.PNG" alt="image" width="800" height="200">
 </p>
 
 Now, when I deleted the load generator pod (load-generator-deployment), the load on our application decreased. As a result, Kubernetes automatically scaled down the number of application pods from 5 back to the minimum of 2.
 
+
 <p align="center">
-<img src="hpatest2.PNG" alt="image" width="800" height="300">
+<img src="images/hpatest2.PNG" alt="image" width="800" height="200">
 </p>
+
+
+### Networkpolicy :
+
+```bash
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: notes-app-network-policy
+  namespace: myapp-ns
+spec:
+  podSelector:
+    matchLabels:
+      app: notes-app
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: load-generator
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: load-generator
+```
+
+I've set up this NetworkPolicy called notes-app-network-policy in our Kubernetes cluster. Basically, what it does is control how pods within our application namespace communicate with each other.
+
+Now, the cool part is that it allows communication between our notes-app pods and our load-generator pods. This means our main application pods can talk to the load generator pods, and vice versa. That's important because the load generator helps us stress-test our application.
+
+But here's the kicker: it restricts all other communication. So, any other pods or workloads we have running in the same namespace won't be able to communicate with our notes-app pods or the load generator. This adds a layer of security and ensures that only the necessary communication is allowed, which is super important for protecting our application and data
+
+
+_Senario:_
+
+So, here's the setup: I've created a new deployment called test-network-policy in our Kubernetes cluster. This deployment mimics the behavior of the load generator, generating HTTP requests to stress-test our application just like the load generator did. However, it has a different name and selector.
+
+Now, the goal here is to test our network policy (notes-app-network-policy) to ensure it's configured correctly. We want to verify that only pods labeled app: load-generator or app: test-network-policy can communicate with our notes-app pods, while all other traffic is blocked.
+
+We'll capture the logs from the pods of the test-network-policy deployment to see the HTTP requests being sent to our notes-app pods. These logs should confirm that the test-network-policy pods are blocked : and notes-app is unreacheable
+
+<p align="center">
+<img src="images/test networkolicy.PNG" alt="image" width="800" height="200">
+</p>
+
+
+### install helm :
+
+```bash
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
+```
+
+_prepare helm charts:_
+
+[helm charts](https://github.com/mmhamdi/assignment/helm/myapp)
+
 
 ## Contributing
 
