@@ -16,7 +16,7 @@ Brief description of your project.
 
 This project involves deploying and managing a scalable web application on Kubernetes, leveraging various Kubernetes resources and configurations to ensure reliability, scalability, and security.
 ## Architecture
-![Alt Text](images/architecture.drawio.png)
+![Alt Text](images/myapp.drawio.png)
 
 
 ## Features
@@ -40,10 +40,13 @@ Autoscaling: The application's scalability is further tested using load generati
 
 ### Prerequisites
 
-A system running  Ubuntu 20.04
-2 CPUs or more
-2GB of free memory
-20GB of free disk space
+*A system running  Ubuntu 20.04*
+
+*2 CPUs or more*
+
+*2GB of free memory*
+
+*20GB of free disk space*
 
 ### Installation minikube cluster 
 
@@ -434,7 +437,7 @@ We'll capture the logs from the pods of the test-network-policy deployment to se
 </p>
 
 
-### install Helm :
+### Install Helm :
 
 ```bash
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -454,11 +457,51 @@ $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 ```
 
+<p align="center">
+<img src="images/helm.PNG" alt="image" width="800" height="200">
+</p>
 
 
-## Contributing
+###configuring jenkins :
+Step 1: Getting the Kubernetes Plugin
+First things first, I needed to integrate Jenkins with Kubernetes, so I grabbed the Kubernetes plugin:
 
-Explain how others can contribute to your project. Include guidelines for submitting bug reports, feature requests, or code contributions. 
+Headed to Jenkins' dashboard and clicked on "Manage Jenkins".
+Then, I navigated to "Manage Plugins" and searched for "Kubernetes Plugin"
+
+<p align="center">
+<img src="images/kubernetes plugin.PNG" alt="image" width="800" height="200">
+</p>
+
+
+Step 2: Configuring Kubernetes in Jenkins
+Now came the fun part - configuring Jenkins to talk to my Minikube cluster:
+
+Went to "Manage Jenkins" > "Configure System".
+Found the "Cloud" section and added a new cloud with Kubernetes.
+Pasted the path to my kubeconfig file (~/.kube/config) and set up credentials using a secret file.
+Clicked the button to test connectivity to Minikube. Success!
+
+Configure Kubernetes plugin in Jenkins settings:
+Provide path to kubeconfig  file :~/.kube/config  and create credentiales using secret file .
+```bash
+cat ~/.kube/config
+```
+Test connectivity to minikube from jenkins :
+
+<p align="center">
+<img src="images/jenkinsconnectiontest.PNG" alt="image" width="800" height="200">
+</p>
+
+
+Create a Jenkins job to deploy to Minikube [JenkinsFile](https://github.com/mmhamdi/assignment/jenkinsfile)
+
+automation of the deployment  using helm charts :
+
+<p align="center">
+<img src="images/jenkins helm.PNG" alt="image" width="800" height="200">
+</p>
+
 
 ## License
 
