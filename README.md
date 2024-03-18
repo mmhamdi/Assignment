@@ -553,7 +553,8 @@ $ ./get_helm.sh
 - Ensure the correct `apiVersion` for Horizontal Pod Autoscaler (HPA) in the cluster.
 - When configuring Jenkins credentials for Minikube cluster connection, ensure certificates are encoded properly:
 
-  ```bash
+
+```bash
   apiVersion: v1
 kind: Config
 clusters:
@@ -575,11 +576,8 @@ user:
   client-key: */client.key
 ```
 
-- Get the base64-encoded string of the certificate file
-
-
 ```bash
-  cat "certificate file" | base64
+cat "certificate file" | base64
 ```
 
 - Update Kubeconfig file
