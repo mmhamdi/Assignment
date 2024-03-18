@@ -4,13 +4,13 @@ metadata:
   name: notes-app-ingress
 spec:
   rules:
-    - host: notes.example.com
+    - host: myapp.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: notes-app-service
+                name: myapp-service
                 port:
                   number: 80
