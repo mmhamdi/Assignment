@@ -12,42 +12,61 @@ Brief description of your project.
 - [Contributing](#contributing)
 - [License](#license)
 
+---
+
 ## Introduction
 
 This project involves deploying and managing a scalable web application on Kubernetes, leveraging various Kubernetes resources and configurations to ensure reliability, scalability, and security.
-## Architecture
-![Alt Text](images/architecture.drawio.png)
 
+---
+
+## Architecture
+
+![Architecture Diagram](images/myapp.drawio.png)
+
+---
 
 ## Features
 
-Deployment: The application is deployed using Kubernetes Deployments, allowing for easy management and scaling of application replicas.
+- **Deployment:**
+  - The application is deployed using Kubernetes Deployments, allowing for easy management and scaling of application replicas.
 
-Service: A Kubernetes Service is used to expose the application externally.
+- **Service:**
+  - A Kubernetes Service is used to expose the application externally.
 
-Network Policy: A Network Policy is implemented to control the flow of traffic to and from the application pods, enhancing security within the cluster.
+- **Network Policy:**
+  - A Network Policy is implemented to control the flow of traffic to and from the application pods, enhancing security within the cluster.
 
-Ingress: An Ingress resource is configured to manage external access to the application, enabling HTTP routing and load balancing for incoming traffic.
+- **Ingress:**
+  - An Ingress resource is configured to manage external access to the application, enabling HTTP routing and load balancing for incoming traffic.
 
-Ingress Controller: An Ingress Controller is deployed to handle Ingress resources, providing advanced routing and traffic management capabilities.
+- **Ingress Controller:**
+  - An Ingress Controller is deployed to handle Ingress resources, providing advanced routing and traffic management capabilities.
 
-Horizontal Pod Autoscaler (HPA): The application is configured with an HPA to automatically scale the number of pods based on CPU utilization, ensuring optimal performance and resource utilization.
+- **Horizontal Pod Autoscaler (HPA):**
+  - The application is configured with an HPA to automatically scale the number of pods based on CPU utilization, ensuring optimal performance and resource utilization.
 
-Autoscaling: The application's scalability is further tested using load generation techniques, verifying the effectiveness of the HPA in dynamically adjusting pod counts in response to changing workloads.
+- **Autoscaling:**
+  - The application's scalability is further tested using load generation techniques, verifying the effectiveness of the HPA in dynamically adjusting pod counts in response to changing workloads.
+
+---
 
 ## Installation
 
 
 ### Prerequisites
 
-A system running  Ubuntu 20.04
-2 CPUs or more
-2GB of free memory
-20GB of free disk space
+*A system running  Ubuntu 20.04*
 
-### Installation minikube cluster 
+*2 CPUs or more*
 
-Step 1: Update System and Install Required Packages:
+*2GB of free memory*
+
+*20GB of free disk space*
+
+### Installation Minikube Cluster
+
+1. **Update System and Install Required Packages:**
 
 ```bash
 sudo apt-get update -y
@@ -59,7 +78,7 @@ sudo apt-get upgrade -y
 sudo apt-get install curl
 sudo apt-get install apt-transport-https
 ```
-Step 2:install docker :
+2. **Install Docker:**
    Set up Docker's apt repository:
 ```bash
 # Add Docker's official GPG key:
@@ -80,7 +99,7 @@ Install the Docker packages:
 ```bash
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
-Step 3: Install Minikube:
+3. **Install Minikube:**
 download the latest Minikube binary:
 ```bash
 wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -97,7 +116,7 @@ verify version of Minikube:
 ```bash
 minikube version
 ```
-Step 4: Install Kubectl:
+4. **Install Kubectl:**
 Download kubectl:
 ```bash
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
@@ -111,7 +130,7 @@ move the binary into path and Verify the installation :
 sudo mv ./kubectl /usr/local/bin/kubectl
 kubectl version -o json
 ```
-Step 5: Start Minikube:
+5.**Start Minikube:**
 ```bash
 sudo minikube start --force --driver=docker
 ```
@@ -129,13 +148,14 @@ sudo minikube addons enable metrics-server
 <img src="images/2.PNG" alt="image" width="900" height="400">
 </p>
 
-### Installation jenkins:
-Step 1: Installing Java:
+### Installation Jenkins
+
+1. **Install Java:**
 ```bash
 sudo apt update
 sudo apt install openjdk-11-jdk
 ```
-Step 2: Installing Jenkins
+2. **Install Jenkins:**
 
 ```bash
 curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
@@ -148,6 +168,7 @@ The Jenkins service will launch automatically following installation:
 <img src="images/jenkinsstaus.PNG" alt="image" width="900" height="400">
 </p>
 
+---
 
 ##Usage
 
@@ -155,8 +176,8 @@ The Jenkins service will launch automatically following installation:
 
 Containerizing a Node.js application involves packaging the application along with its dependencies, libraries, and runtime environment into a container.
 
-Step 1 : Create a Dockerfile in the root directory which  contains instructions for building the Docker image:
-
+1. **Create a Dockerfile in the root directory.**
+   
 ```bash
 # Use an existing node image as base image
 FROM node:14-alpine
@@ -179,7 +200,7 @@ EXPOSE 3000
 # Start the application
 CMD [ "npm", "start" ]
 ```
-Step 2 : Build the Docker image :
+2. **Build the Docker image:**
 
 ```bash
 docker build -t moha1992/myapp:v1 .
@@ -189,7 +210,7 @@ docker build -t moha1992/myapp:v1 .
 <img src="images/dockerbuild.PNG" alt="image" width="900" height="400">
 </p>
 
-Step3 :Log in to Docker Hub and push the Docker image to Docker Hub :
+3. **Log in to Docker Hub and push the Docker image:**
 
 ```bash
 docker login 
@@ -201,14 +222,14 @@ docker push moha1992/myapp:v1
 </p>
 
 ### Create namespace and Create secret Docker-registry:
-Create namespace:_
+- Create namespace: myapp-ns 
  I've just created a new namespace (myapp-ns) in our Kubernetes cluster to manage our applications separately. This namespace helps us maintain isolation and organization within the cluster, making it easier to manage resources and apply security policies.
 
 <p align="center">
 <img src="images/ns.PNG" alt="image" width="600" height="200">
 </p>
  
-_Create secret Docker-registry:_
+- Create secret Docker-registry for authentication.
 
 the Docker registry secret allow us to securely authenticate with our private Docker registry from within Kubernetes. Essentially, it's a way to securely store our registry credentials, such as usernames and passwords, so we can pull container images during deployment without exposing sensitive information.
 
@@ -218,7 +239,12 @@ the Docker registry secret allow us to securely authenticate with our private Do
 
 
 ### Kubernetes deployment :
+
+- Deploy the application using Kubernetes [Deployment.yaml](https://github.com/mmhamdi/assignment/k8s/deployment.yaml):
+
 I've created a Kubernetes Deployment resource named notes-app-deployment within the namespace myapp-ns. This deployment is responsible for managing instances of my containerized application, ensuring that the specified number of replicas (in this case, 2) are running and healthy.
+
+- Configure resources, liveness probe, and readiness probe:
 
 **Resources and Limits:**
 
@@ -267,6 +293,8 @@ Readiness Probe: I've configured a readiness probe to determine whether the cont
 the Deployment resource I've defined ensures that my containerized application is deployed with optimized resource utilization, and it's equipped with liveness and readiness probes for health monitoring and self-healing capabilities within a Kubernetes environment. These features collectively contribute to the reliability, availability, and efficiency of my application deployment
 
 ### Service and Ingress :
+- Set up a Kubernetes Service to expose the application:
+- 
 **Service :**
 
 ```bash
@@ -288,6 +316,8 @@ spec:
  I've set up a Kubernetes Service, myapp-service, in the myapp-ns namespace. It acts as a gateway for my app, directing external traffic from port 80 to my app's pods on port 3000. With the LoadBalancer type, Kubernetes automatically provisions an external load balancer, evenly distributing traffic across my app's pods. Users access my app seamlessly without needing to know the Kubernetes setup details
 
 **Ingress:**
+- Configure an Ingress resource to manage external access to the application.
+
 _Modify the hostname in /etc/hosts:_
 
 ```bash
@@ -350,6 +380,7 @@ from web browser :
 
 ### Scaling and self-healing  :
 _HPA:_
+- Configure Horizontal Pod Autoscaler (HPA) for automatic scaling:
 
 ```bash
 apiVersion: autoscaling/v1  #troubleshooting Since k8s 1.23 autoscaling/v2beta2 is deprecated so i run kubectl api-server
@@ -370,6 +401,7 @@ spec:
 This Horizontal Pod Autoscaler (HPA) automatically adjusts the number of pods in our notes-app-deployment based on CPU consumption. If CPU usage exceeds 20%, it scales up to a maximum of 5 pods. If usage drops below 20%, it scales down to a minimum of 2 pods. This ensures our application can handle varying levels of traffic efficiently
 
 *Senario:*
+- Observe automatic scaling based on CPU utilization:
 
 So, here's the setup: I've deployed a load generator pod (load-generator-deployment) in the myapp-ns namespace. This pod continuously generates HTTP requests to our application pods (notes-app-deployment), creating a load on them.
 
@@ -388,6 +420,7 @@ Now, when I deleted the load generator pod (load-generator-deployment), the load
 
 
 ### Networkpolicy :
+- Implement a Network Policy to control pod-to-pod communication.
 
 ```bash
 apiVersion: networking.k8s.io/v1
@@ -422,6 +455,7 @@ But here's the kicker: it restricts all other communication. So, any other pods 
 
 
 _Senario:_
+- Test the Network Policy to ensure proper configuration.
 
 So, here's the setup: I've created a new deployment called test-network-policy in our Kubernetes cluster. This deployment mimics the behavior of the load generator, generating HTTP requests to stress-test our application just like the load generator did. However, it has a different name and selector.
 
@@ -434,7 +468,7 @@ We'll capture the logs from the pods of the test-network-policy deployment to se
 </p>
 
 
-### install Helm :
+1. **Download Helm:**
 
 ```bash
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -442,11 +476,11 @@ $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 ```
 
-_prepare helm charts:_
+2. **Prepare Helm charts.**
 
 [Helm charts](https://github.com/mmhamdi/assignment/helm/myapp)
 
-_Deploy myapp application from Helm charts:_
+3. **Deploy the application using Helm charts.**
 
 ```bash
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -454,11 +488,44 @@ $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 ```
 
+<p align="center">
+<img src="images/helm.PNG" alt="image" width="800" height="200">
+</p>
 
+---
+## Configuration de Jenkins pour le déploiement sur Minikube
 
-## Contributing
+1. **Installation du Plugin Kubernetes :**
+   - Accédez au tableau de bord de Jenkins et cliquez sur "Gérer Jenkins".
+   - Naviguez vers "Gérer les Plugins".
+   - Recherchez "Plugin Kubernetes" et installez-le.
 
-Explain how others can contribute to your project. Include guidelines for submitting bug reports, feature requests, or code contributions. 
+<p align="center">
+<img src="/images/kubernetes plugin.PNG" alt="image" width="600" height="200">
+  </p>     
+
+2. **Configuration du Plugin Kubernetes :**
+   - Allez dans "Gérer Jenkins" > "Configurer le Système".
+   - Dans la section "Cloud", cliquez sur "Ajouter un nouveau cloud" > "Kubernetes".
+   - Fournissez le chemin vers votre fichier kubeconfig (`~/.kube/config`) et configurez les informations d'identification avec un fichier secret.
+   - Testez la connectivité avec Minikube depuis Jenkins.
+
+   ![Test de Connexion Jenkins](images/jenkinsconnectiontest.PNG)
+
+3. **Création d'une Tâche Jenkins :**
+   - Créez une nouvelle tâche Jenkins.
+   - Utilisez le fichier [JenkinsFile](https://github.com/mmhamdi/assignment/jenkinsfile) fourni pour le déploiement sur Minikube.
+
+4. **Automatisation du Déploiement avec Helm Charts :**
+   - Assurez-vous que Helm est installé sur la machine Jenkins.
+   - Configurez Jenkins pour utiliser Helm dans votre script de pipeline.
+   - Mettez à jour votre Jenkinsfile pour inclure le déploiement avec les charts Helm.
+  
+<p align="center">
+<img src="images/jenkins helm.PNG" alt="image" width="400" height="200">
+</p>
+
+---
 
 ## License
 
