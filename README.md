@@ -104,7 +104,7 @@ Step 5: Start Minikube:
 ```bash
 sudo minikube start --force --driver=docker
 ```
-<img src="images/Capture.PNG" alt="image" width="600" height="400">
+<img src="images/Capture.PNG" alt="image" width="900" height="400">
 
 ## Usage
 
