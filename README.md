@@ -104,14 +104,7 @@ Step 5: Start Minikube:
 ```bash
 sudo minikube start --force --driver=docker
 ```
-<style>
-.custom-image {
-  width: 300px;
-  height: auto;
-}
-</style>
-
-<img src="images/Capture.PNG" alt="image" class="custom-image">
+<img src="images/Capture.PNG" alt="image" width="300" height="200">
 
 ## Usage
 
