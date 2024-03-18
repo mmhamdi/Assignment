@@ -1,0 +1,46 @@
+
+pipeline {
+    agent any
+    environment {
+        KUBECONFIG = credentials('k8s')
+    }
+    tools {
+        nodejs "node"
+    }
+    stages {
+        stage('Clone and Build') {
+            steps {
+                git branch: 'main', credentialsId: 'git', url: 'https://github.com/mmhamdi/Assignment-.git', poll: true
+                sh 'npm install'
+            }
+        }
+        stage('Build and Push Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t moha1992/myapp:v1 .'
+                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                        sh "docker login -u moha1992 -p ${dockerhubpwd}"
+                        sh 'docker push moha1992/myapp:v1'
+                    }
+                }
+            }
+        }
+        stage('Setup Helm') {
+            steps {
+                script {
+                    sh "export KUBECONFIG=${KUBECONFIG}"
+                    dir('k8s') {
+                        sh 'chmod 700 ./get_helm.sh'
+                        // Run get_helm.sh script
+                        sh './get_helm.sh'
+                    }
+                    dir('helm') {
+                        // Run helm install command
+                        sh 'helm install myapp /var/lib/jenkins/workspace/Assignment/helm/myapp'
+                    }
+                }
+            }
+        }
+    }
+}
+
