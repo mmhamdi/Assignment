@@ -171,6 +171,18 @@ Step 2 : Build the Docker image :
 <img src="images/dockerbuild.PNG" alt="image" width="900" height="400">
 </p>
 
+Step3 :Log in to Docker Hub and push the Docker image to Docker Hub :
+
+```bash
+docker login 
+docker push moha1992/myapp:v1
+```
+
+<p align="center">
+<img src="images/dockerpush.PNG" alt="image" width="900" height="400">
+</p>
+
+
 ## Contributing
 
 Explain how others can contribute to your project. Include guidelines for submitting bug reports, feature requests, or code contributions. 
