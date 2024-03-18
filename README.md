@@ -318,7 +318,7 @@ spec:
 **Ingress:**
 - Configure an Ingress resource to manage external access to the application.
 
-_Modify the hostname in /etc/hosts:_
+Modify the hostname in /etc/hosts:
 
 ```bash
 IPAADRESSMINIKUBE myapp.com
@@ -527,8 +527,31 @@ $ ./get_helm.sh
 
 ---
 
-## License
+## Troubleshooting
 
-Specify the license under which your project is distributed. Include any terms or conditions associated with the license.
+### Issue 1: Kubeadm Initialization Problem
+- **Problem**: While initializing kubeadm, encountered an issue.
+- **Resolution**: After running `journalctl -u kubelet`, it was evident that swapping needed to be disabled. Executed `swapoff -a` to disable swapping on specified devices or files, resolving the problem.
+
+### Issue 2: Coredns Pods Pending State
+- **Problem**: After initiating the cluster and installing networking addons, the Coredns pods remained in a pending state.
+- **Resolution**: Removed the existing deployment of Coredns and recreated it, solving the pending state issue.
+
+### Issue 3: Communication Problem between Backend and Database
+- **Problem**: Backend deployment unable to recognize the MySQL service, leading to communication problems.
+- **Resolution**: Addressed DNS-related issues, allowing the backend pod to reach the MySQL service. Additionally, adjusted resource allocations to prevent pod restarts.
+
+### Issue 4: Minikube Cluster Startup Failure
+- **Problem**: Minikube cluster failed to start after restarting the container.
+- **Resolution**: Resolved by adjusting the kernel parameter using `sudo sysctl fs.protected_regular=0`, resolving compatibility issues and permissions errors encountered during cluster startup.
+
+### Issue 5: Ingress Controller Pod Pending State
+- **Problem**: Ingress controller pod remained in a pending state.
+- **Resolution**: Manually refreshed the pod, allowing it to start. Investigated logs to identify underlying issues.
+
+### Additional Considerations:
+- Ensure the correct `apiVersion` for Horizontal Pod Autoscaler (HPA) in the cluster.
+- When configuring Jenkins credentials for Minikube cluster connection, ensure certificates are encoded properly.
+
 
 
