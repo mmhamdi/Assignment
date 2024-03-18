@@ -41,6 +41,7 @@ Step 1: Update System and Install Required Packages:
 ```bash
 sudo apt-get update -y
 sudo apt-get upgrade -y
+```
 
 
 ## Usage
