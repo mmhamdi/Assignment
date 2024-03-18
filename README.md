@@ -38,8 +38,10 @@ A system running  Ubuntu 20.04
 
 Step 1: Update System and Install Required Packages:
 
+```bash
 sudo apt-get update -y
 sudo apt-get upgrade -y
+
 
 ## Usage
 
