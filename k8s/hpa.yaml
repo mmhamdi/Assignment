@@ -2,6 +2,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: notes-app-hpa
+  namespace: myapp-ns
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
@@ -9,4 +10,4 @@ spec:
     name: notes-app-deployment
   minReplicas: 2
   maxReplicas: 5
-  targetCPUUtilizationPercentage: 20  # Lower CPU threshold to trigger scaling
+  targetCPUUtilizationPercentage: 20  

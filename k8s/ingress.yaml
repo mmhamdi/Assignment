@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: notes-app-ingress
+  namespace: myapp-ns
 spec:
   rules:
     - host: myapp.com
