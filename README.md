@@ -240,7 +240,7 @@ the Docker registry secret allow us to securely authenticate with our private Do
 
 ### Kubernetes deployment :
 
-- Deploy the application using Kubernetes [Deployment.yaml](https://github.com/mmhamdi/assignment/k8s/deployment.yaml):
+- Deploy the application using Kubernetes [Deployment.yaml](https://github.com/mmhamdi/assignment/blob/main/k8s/deployment.yaml) :
 
 I've created a Kubernetes Deployment resource named notes-app-deployment within the namespace myapp-ns. This deployment is responsible for managing instances of my containerized application, ensuring that the specified number of replicas (in this case, 2) are running and healthy.
 
