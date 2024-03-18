@@ -22,10 +22,10 @@ spec:
         image: moha1992/myapp:v1
         resources:
           requests:
-            cpu: "10m"
+            cpu: "50m"
             memory: "64Mi"
           limits:
-            cpu: "40m"  
+            cpu: "100m"  
             memory: "128Mi" 
         imagePullPolicy: IfNotPresent
         ports:
