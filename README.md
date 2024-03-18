@@ -14,15 +14,26 @@ Brief description of your project.
 
 ## Introduction
 
-Provide an overview of your project, its purpose, and the problem it aims to solve. Explain the importance and relevance of the project within its context.
-
+This project involves deploying and managing a scalable web application on Kubernetes, leveraging various Kubernetes resources and configurations to ensure reliability, scalability, and security.
 ## Architecture
 ![Alt Text](images/architecture.drawio.png)
 
 
 ## Features
 
-List and describe the key features of your project. You can also include any notable functionalities or capabilities.
+Deployment: The application is deployed using Kubernetes Deployments, allowing for easy management and scaling of application replicas.
+
+Service: A Kubernetes Service is used to expose the application externally.
+
+Network Policy: A Network Policy is implemented to control the flow of traffic to and from the application pods, enhancing security within the cluster.
+
+Ingress: An Ingress resource is configured to manage external access to the application, enabling HTTP routing and load balancing for incoming traffic.
+
+Ingress Controller: An Ingress Controller is deployed to handle Ingress resources, providing advanced routing and traffic management capabilities.
+
+Horizontal Pod Autoscaler (HPA): The application is configured with an HPA to automatically scale the number of pods based on CPU utilization, ensuring optimal performance and resource utilization.
+
+Autoscaling: The application's scalability is further tested using load generation techniques, verifying the effectiveness of the HPA in dynamically adjusting pod counts in response to changing workloads.
 
 ## Installation
 
@@ -251,6 +262,8 @@ Readiness Probe: I've configured a readiness probe to determine whether the cont
           periodSeconds: 10   #Perform the probe every 10 seconds
 ```
 
+
+
 the Deployment resource I've defined ensures that my containerized application is deployed with optimized resource utilization, and it's equipped with liveness and readiness probes for health monitoring and self-healing capabilities within a Kubernetes environment. These features collectively contribute to the reliability, availability, and efficiency of my application deployment
 
 ### Service and Ingress :
@@ -421,7 +434,7 @@ We'll capture the logs from the pods of the test-network-policy deployment to se
 </p>
 
 
-### install helm :
+### install Helm :
 
 ```bash
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -431,7 +444,16 @@ $ ./get_helm.sh
 
 _prepare helm charts:_
 
-[helm charts](https://github.com/mmhamdi/assignment/helm/myapp)
+[Helm charts](https://github.com/mmhamdi/assignment/helm/myapp)
+
+_Deploy myapp application from Helm charts:_
+
+```bash
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
+```
+
 
 
 ## Contributing
