@@ -34,7 +34,7 @@ A system running  Ubuntu 20.04
 2GB of free memory
 20GB of free disk space
 
-### Installation Steps
+### Installation minikube cluster 
 
 Step 1: Update System and Install Required Packages:
 
@@ -118,9 +118,58 @@ sudo minikube addons enable metrics-server
 <img src="images/2.PNG" alt="image" width="900" height="400">
 </p>
 
-## Usage
+### Installation jenkins:
+Step 1: Installing Java:
+```bash
+sudo apt update
+sudo apt install openjdk-11-jdk
+```
+Step 2: Installing Jenkins
 
-Provide instructions on how to use your project. Include examples or code snippets to demonstrate its usage.
+```bash
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]  https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt update
+sudo apt install jenkins
+```
+The Jenkins service will launch automatically following installation:
+<p align="center">
+<img src="images/jenkinsstaus.PNG" alt="image" width="900" height="400">
+</p>
+
+### Containerizing my application :
+
+Containerizing a Node.js application involves packaging the application along with its dependencies, libraries, and runtime environment into a container.
+
+Step 1 : Create a Dockerfile in the root directory which  contains instructions for building the Docker image:
+
+```bash
+# Use an existing node image as base image
+FROM node:14-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json to the container
+COPY package*.json ./
+
+# Install required packages
+RUN npm install
+
+# Copy all files to the container
+COPY . .
+
+# Expose port 3000
+EXPOSE 3000
+
+# Start the application
+CMD [ "npm", "start" ]
+```
+Step 2 : Build the Docker image :
+
+<p align="center">
+<img src="images/dockerbuild.PNG" alt="image" width="900" height="400">
+</p>
 
 ## Contributing
 
