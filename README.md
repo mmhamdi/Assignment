@@ -48,7 +48,7 @@ sudo apt-get upgrade -y
 sudo apt-get install curl
 sudo apt-get install apt-transport-https
 ```
-Step 1:install docker 
+Step 2:install docker :
    Set up Docker's apt repository:
 ```bash
 # Add Docker's official GPG key:
@@ -69,6 +69,43 @@ Install the Docker packages:
 ```bash
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
+Step 3: Install Minikube:
+download the latest Minikube binary:
+```bash
+wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+```
+Copy the downloaded file and store it into the /usr/local/bin/minikube directory :
+```bash
+sudo cp minikube-linux-amd64 /usr/local/bin/minikube
+```
+give the file executive permission:
+```bash
+sudo chmod 755 /usr/local/bin/minikube
+```
+verify version of Minikube:
+```bash
+minikube version
+```
+Step 4: Install Kubectl:
+Download kubectl:
+```bash
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+```
+Make the binary executable:
+```bash
+chmod +x ./kubectl
+```
+move the binary into path and Verify the installation :
+```bash
+sudo mv ./kubectl /usr/local/bin/kubectl
+kubectl version -o json
+```
+Step 5: Start Minikube:
+```bash
+sudo minikube start --force --driver=docker
+```
+![Alt Text](images/Capture.PNG)
+
 ## Usage
 
 Provide instructions on how to use your project. Include examples or code snippets to demonstrate its usage.
