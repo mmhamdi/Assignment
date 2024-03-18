@@ -26,15 +26,20 @@ List and describe the key features of your project. You can also include any not
 
 ## Installation
 
-Provide step-by-step instructions on how to install and set up your project. Include any prerequisites, dependencies, or system requirements.
 
 ### Prerequisites
 
-List any prerequisites or dependencies required to install and run your project.
+A system running  Ubuntu 20.04
+2 CPUs or more
+2GB of free memory
+20GB of free disk space
 
 ### Installation Steps
 
-Outline the installation steps for your project. Include commands or scripts to download, install, and configure any necessary components.
+#####Step 1: Update System and Install Required Packages
+```bash
+sudo apt-get update -y
+sudo apt-get upgrade -y
 
 ## Usage
 
