@@ -107,6 +107,16 @@ sudo minikube start --force --driver=docker
 <p align="center">
 <img src="images/Capture.PNG" alt="image" width="900" height="400">
 </p>
+enable  addons :
+```bash
+sudo minikube addons enable ingress
+sudo minikube addons enable registry
+sudo minikube addons enable metrics-server
+
+```
+<p align="center">
+<img src="images/2.PNG" alt="image" width="900" height="400">
+</p>
 
 ## Usage
 
