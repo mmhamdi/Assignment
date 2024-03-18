@@ -478,7 +478,7 @@ $ ./get_helm.sh
 
 2. **Prepare Helm charts.**
 
-[Helm charts](https://github.com/mmhamdi/assignment/helm/myapp)
+[Helm charts](https://github.com/mmhamdi/assignment/tree/main/helm/myapp)
 
 3. **Deploy the application using Helm charts.**
 
