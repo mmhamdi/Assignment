@@ -358,6 +358,17 @@ _Senario:_
 So, here's the setup: I've deployed a load generator pod (load-generator-deployment) in the myapp-ns namespace. This pod continuously generates HTTP requests to our application pods (notes-app-deployment), creating a load on them.
 
 When I applied the load generator, I observed that the application scaled up automatically to accommodate the increased demand. Initially, we had 2 pods running, but as the load increased, Kubernetes dynamically scaled up the number of pods to 5 to handle the additional traffic.
+
+<p align="center">
+<img src="images/hpatest.PNG" alt="image" width="800" height="300">
+</p>
+
+Now, when I deleted the load generator pod (load-generator-deployment), the load on our application decreased. As a result, Kubernetes automatically scaled down the number of application pods from 5 back to the minimum of 2.
+
+<p align="center">
+<img src="hpatest2.PNG" alt="image" width="800" height="300">
+</p>
+
 ## Contributing
 
 Explain how others can contribute to your project. Include guidelines for submitting bug reports, feature requests, or code contributions. 
