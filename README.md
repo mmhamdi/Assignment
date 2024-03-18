@@ -552,6 +552,7 @@ $ ./get_helm.sh
 ### Additional Considerations:
 - Ensure the correct `apiVersion` for Horizontal Pod Autoscaler (HPA) in the cluster.
 - When configuring Jenkins credentials for Minikube cluster connection, ensure certificates are encoded properly:
+
   ```bash
   apiVersion: v1
 kind: Config
@@ -572,16 +573,21 @@ users:
 user:
   client-certificate: */client.crt
   client-key: */client.key
-  ```
-  -Get the base64-encoded string of the certificate file
-  ```bash
+```
+
+- Get the base64-encoded string of the certificate file
+
+
+```bash
   cat "certificate file" | base64
 ```
+
 - Update Kubeconfig file
 Change certificate-authority to certificate-authority-data, and enter the base64-encoded string of the */ca.crt certificate file.
 Change client-certificate to client-certificate-data, and enter the base64-encoded string of the */client.crt certificate file.
 Change client-key to client-key-data, and enter the base64-encoded string of the */client.key certificate file.
 The result is as follows:
+
 ```bash
 apiVersion: v1
 kind: Config
