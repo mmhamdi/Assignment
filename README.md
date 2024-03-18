@@ -36,8 +36,8 @@ A system running  Ubuntu 20.04
 
 ### Installation Steps
 
-#####Step 1: Update System and Install Required Packages
-```bash
+Step 1: Update System and Install Required Packages:
+
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
