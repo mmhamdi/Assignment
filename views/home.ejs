@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Note Keeper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .note-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        textarea {
+            width: 300px;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .note-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .note-card {
+            width: 300px;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .note-card textarea {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 5px;
+        }
+
+        .note-card button {
+            margin-top: 5px;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Note Keeper</h1>
+
+        <div class="note-container">
+            <% data.forEach(element => { %>
+                <div class="note-card">
+                    <form action="/update" method="post">
+                        <input type="number" name="noteId" value="<%= element.noteId %>" hidden>
+                        <textarea name="noteContent" placeholder="Type Here..."><%= element.noteContent %></textarea>
+                        <button type="submit">Update</button>
+                    </form>
+                    <form action="/delete" method="post">
+                        <input type="number" name="noteId" value="<%= element.noteId %>" hidden>
+                        <button type="submit" class="delete-btn">✕</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+
+        <h2>Add Note</h2>
+        <form class="note-form" action="/" method="post">
+            <textarea name="noteContent" placeholder="Type Here..." required></textarea>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</body>
+
+</html>
