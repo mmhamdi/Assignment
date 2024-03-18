@@ -521,8 +521,8 @@ $ ./get_helm.sh
    - Configurez Jenkins pour utiliser Helm dans votre script de pipeline.
    - Mettez à jour votre Jenkinsfile pour inclure le déploiement avec les charts Helm.
   
-      <p align="center">
-<img src="images/jenkins helm.PNG" alt="image" width="600" height="200">
+<p align="center">
+<img src="images/jenkins helm.PNG" alt="image" width="400" height="200">
 </p>
 
 ---
