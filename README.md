@@ -170,7 +170,7 @@ The Jenkins service will launch automatically following installation:
 
 ---
 
-##Usage
+## Usage
 
 ### Containerizing my application :
 
