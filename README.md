@@ -242,8 +242,8 @@ the Docker registry secret allow us to securely authenticate with our private Do
 
 - Deploy the application using Kubernetes [Deployment.yaml](https://github.com/mmhamdi/assignment/blob/main/k8s/deployment.yaml) :
 
-  <p align="center">
-<img src="images/dockerbuild.PNG" alt="image" width="900" height="400">
+<p align="center">
+<img src="images/deploymentruning.PNG" alt="image" width="600" height="150">
 </p>
 
 I've created a Kubernetes Deployment resource named notes-app-deployment within the namespace myapp-ns. This deployment is responsible for managing instances of my containerized application, ensuring that the specified number of replicas (in this case, 2) are running and healthy.
@@ -319,6 +319,10 @@ spec:
 
  I've set up a Kubernetes Service, myapp-service, in the myapp-ns namespace. It acts as a gateway for my app, directing external traffic from port 80 to my app's pods on port 3000. With the LoadBalancer type, Kubernetes automatically provisions an external load balancer, evenly distributing traffic across my app's pods. Users access my app seamlessly without needing to know the Kubernetes setup details
 
+<p align="center">
+<img src="images/serviceruning.PNG" alt="image" width="1000" height="250">
+</p>
+
 **Ingress:**
 - Configure an Ingress resource to manage external access to the application.
 
@@ -364,6 +368,10 @@ spec:
 
 I've set up an Ingress resource named notes-app-ingress to manage external access to my app using the myapp.com hostname. It directs incoming requests to the root path (/) of myapp.com to my myapp-service, which handles the app's functionality. It's like a VIP entrance for my app, making external access smooth and hassle-free
 
+<p align="center">
+<img src="images/ingresswork.PNG" alt="image" width="900" height="400">
+</p>
+
 _Test Ingress_:
 
  from terminal :
@@ -403,6 +411,11 @@ spec:
 ```
 
 This Horizontal Pod Autoscaler (HPA) automatically adjusts the number of pods in our notes-app-deployment based on CPU consumption. If CPU usage exceeds 20%, it scales up to a maximum of 5 pods. If usage drops below 20%, it scales down to a minimum of 2 pods. This ensures our application can handle varying levels of traffic efficiently
+
+
+<p align="center">
+<img src="images/hpawork.PNG" alt="image" width="800" height="200">
+</p>
 
 *Senario:*
 - Observe automatic scaling based on CPU utilization:
@@ -457,6 +470,10 @@ Now, the cool part is that it allows communication between our notes-app pods an
 
 But here's the kicker: it restricts all other communication. So, any other pods or workloads we have running in the same namespace won't be able to communicate with our notes-app pods or the load generator. This adds a layer of security and ensures that only the necessary communication is allowed, which is super important for protecting our application and data
 
+<p align="center">
+<img src="images/networkpolicyruning.PNG" alt="image" width="800" height="200">
+</p>
+
 
 _Senario:_
 - Test the Network Policy to ensure proper configuration.
@@ -497,37 +514,53 @@ $ ./get_helm.sh
 </p>
 
 ---
-## Configuration de Jenkins pour le déploiement sur Minikube
+## Configuring Jenkins for Deployment on Minikube
 
-1. **Installation du Plugin Kubernetes :**
-   - Accédez au tableau de bord de Jenkins et cliquez sur "Gérer Jenkins".
-   - Naviguez vers "Gérer les Plugins".
-   - Recherchez "Plugin Kubernetes" et installez-le.
-
+1. **Install the Kubernetes Plugin:**
+   - Access the Jenkins dashboard and click on "Manage Jenkins".
+   - Navigate to "Manage Plugins".
+   - Search for "Kubernetes Plugin" and install it.
 <p align="center">
-<img src="/images/kubernetes plugin.PNG" alt="image" width="600" height="200">
-  </p>     
-
-2. **Configuration du Plugin Kubernetes :**
-   - Allez dans "Gérer Jenkins" > "Configurer le Système".
-   - Dans la section "Cloud", cliquez sur "Ajouter un nouveau cloud" > "Kubernetes".
-   - Fournissez le chemin vers votre fichier kubeconfig (`~/.kube/config`) et configurez les informations d'identification avec un fichier secret.
-   - Testez la connectivité avec Minikube depuis Jenkins.
-
-   ![Test de Connexion Jenkins](images/jenkinsconnectiontest.PNG)
-
-3. **Création d'une Tâche Jenkins :**
-   - Créez une nouvelle tâche Jenkins.
-   - Utilisez le fichier [JenkinsFile](https://github.com/mmhamdi/assignment/jenkinsfile) fourni pour le déploiement sur Minikube.
-
-4. **Automatisation du Déploiement avec Helm Charts :**
-   - Assurez-vous que Helm est installé sur la machine Jenkins.
-   - Configurez Jenkins pour utiliser Helm dans votre script de pipeline.
-   - Mettez à jour votre Jenkinsfile pour inclure le déploiement avec les charts Helm.
-  
-<p align="center">
-<img src="images/jenkins helm.PNG" alt="image" width="400" height="200">
+    <img src="images/kubernetes_plugin.PNG" alt="Kubernetes Plugin" width="800" height="200">
 </p>
+
+
+2. **Configure the Kubernetes Plugin:**
+   - Go to "Manage Jenkins" > "Configure System".
+   - In the "Cloud" section, click on "Add a new cloud" > "Kubernetes".
+   - Provide the path to your kubeconfig file (`~/.kube/config`) and configure credentials with a secret file.
+   - Test connectivity with Minikube from Jenkins.
+
+<p align="center">
+<img src="assignment/images/jenkinsconnectiontest.PNG" alt="image" width="800" height="200">
+</p>
+
+3. **Create a Jenkins Job:**
+   - Create a new Jenkins job.
+   - Use the provided [JenkinsFile] (https://github.com/mmhamdi/assignment/jenkinsfile) for deployment on Minikube.
+
+### Pipeline Stages
+
+The Jenkinsfile defines several stages to automate the CI/CD process:
+
+   - Clone and Build
+
+This stage clones the Git repository and builds the project. It uses the `git` plugin to fetch the source code from the `main` branch and the `npm install` command to install project dependencies.
+
+    - Build and Push Docker Image
+
+In this stage, the project is built into a Docker image and pushed to a Docker registry. The `docker build` command creates the Docker image, and the `docker login` and `docker push` commands authenticate and upload the image to the Docker Hub registry.
+
+    - Setup Helm
+
+This stage sets up Helm for Kubernetes deployment. It exports the Kubernetes configuration file (`KUBECONFIG`) to authenticate with the Kubernetes cluster. Then, it executes a script to install Helm and deploys the application using the Helm chart located in the specified directory.
+
+4. **Automating Deployment with Helm Charts:**
+   - Ensure Helm is installed on the Jenkins machine.
+   - Configure Jenkins to use Helm in your pipeline script.
+   - Update your Jenkinsfile to include deployment with Helm charts.
+
+ ![Jenkins Helm](https://github.com/mmhamdi/assignment/images/jenkins_helm.PNG)
 
 ---
 
