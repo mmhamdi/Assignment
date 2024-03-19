@@ -519,50 +519,52 @@ $ ./get_helm.sh
 1. **Install the Kubernetes Plugin:**
    - Access the Jenkins dashboard and click on "Manage Jenkins".
    - Navigate to "Manage Plugins".
-   - Search for "Kubernetes Plugin" and install it.
-<p align="center">
-    <img src="images/kubernetes_plugin.PNG" alt="Kubernetes Plugin" width="800" height="200">
-</p>
+   - Search for "Kubernetes Plugin" and install it
 
+
+<p align="center">
+<img src="images/kubernetes plugin.PNG" alt="image" width="800" height="200">
+</p>
 
 2. **Configure the Kubernetes Plugin:**
    - Go to "Manage Jenkins" > "Configure System".
    - In the "Cloud" section, click on "Add a new cloud" > "Kubernetes".
    - Provide the path to your kubeconfig file (`~/.kube/config`) and configure credentials with a secret file.
-   - Test connectivity with Minikube from Jenkins.
+   - Test connectivity with Minikube from Jenkins
 
 <p align="center">
-<img src="assignment/images/jenkinsconnectiontest.PNG" alt="image" width="800" height="200">
+<img src="images/jenkinsconnectiontest.PNG" alt="image" width="800" height="200">
 </p>
 
 3. **Create a Jenkins Job:**
    - Create a new Jenkins job.
-   - Use the provided [JenkinsFile] (https://github.com/mmhamdi/assignment/jenkinsfile) for deployment on Minikube.
+   - Use the provided [jenkinsfile](https://github.com/mmhamdi/assignment/blob/main/jenkinsfile) for deployment on Minikube.
 
-### Pipeline Stages
+4. **Pipeline Stages:**
+
+4. **Pipeline Stages:**
 
 The Jenkinsfile defines several stages to automate the CI/CD process:
 
-   - Clone and Build
+- **Clone and Build:**
+  This stage clones the Git repository and builds the project. It uses the `git` plugin to fetch the source code from the `main` branch and the `npm install` command to install project dependencies.
 
-This stage clones the Git repository and builds the project. It uses the `git` plugin to fetch the source code from the `main` branch and the `npm install` command to install project dependencies.
+- **Build and Push Docker Image:**
+  In this stage, the project is built into a Docker image and pushed to a Docker registry. The `docker build` command creates the Docker image, and the `docker login` and `docker push` commands authenticate and upload the image to the Docker Hub registry.
 
-    - Build and Push Docker Image
+- **Setup Helm:**
+  This stage sets up Helm for Kubernetes deployment. It exports the Kubernetes configuration file (`KUBECONFIG`) to authenticate with the Kubernetes cluster. Then, it executes a script to install Helm and deploys the application using the Helm chart located in the specified directory.
 
-In this stage, the project is built into a Docker image and pushed to a Docker registry. The `docker build` command creates the Docker image, and the `docker login` and `docker push` commands authenticate and upload the image to the Docker Hub registry.
-
-    - Setup Helm
-
-This stage sets up Helm for Kubernetes deployment. It exports the Kubernetes configuration file (`KUBECONFIG`) to authenticate with the Kubernetes cluster. Then, it executes a script to install Helm and deploys the application using the Helm chart located in the specified directory.
-
-4. **Automating Deployment with Helm Charts:**
+5. **Automating Deployment with Helm Charts:**
    - Ensure Helm is installed on the Jenkins machine.
    - Configure Jenkins to use Helm in your pipeline script.
    - Update your Jenkinsfile to include deployment with Helm charts.
 
- ![Jenkins Helm](https://github.com/mmhamdi/assignment/images/jenkins_helm.PNG)
 
----
+<p align="center">
+<img src="images/jenkins helm.PNG" alt="image" width="800" height="400">
+</p>
+
 
 ## Troubleshooting
 
