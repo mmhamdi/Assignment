@@ -9,8 +9,8 @@ Brief description of your project.
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Troubleshooting](#Troubleshooting)
+
 
 ---
 
