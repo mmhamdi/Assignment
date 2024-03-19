@@ -242,6 +242,10 @@ the Docker registry secret allow us to securely authenticate with our private Do
 
 - Deploy the application using Kubernetes [Deployment.yaml](https://github.com/mmhamdi/assignment/blob/main/k8s/deployment.yaml) :
 
+  <p align="center">
+<img src="images/dockerbuild.PNG" alt="image" width="900" height="400">
+</p>
+
 I've created a Kubernetes Deployment resource named notes-app-deployment within the namespace myapp-ns. This deployment is responsible for managing instances of my containerized application, ensuring that the specified number of replicas (in this case, 2) are running and healthy.
 
 - Configure resources, liveness probe, and readiness probe:
