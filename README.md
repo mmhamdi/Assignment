@@ -56,13 +56,13 @@ In the ever-evolving landscape of web development, the need for scalable and eff
 
 ### Prerequisites
 
-*A system running  Ubuntu 20.04*
-
-*2 CPUs or more*
-
-*2GB of free memory*
-
-*20GB of free disk space*
+  **A system running  Ubuntu 20.04**
+  
+  **2CPUs or more**
+  
+  **2GB of free memory**
+  
+  **20GB of free disk space**
 
 ### Installation Minikube Cluster
 
