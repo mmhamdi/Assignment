@@ -480,7 +480,7 @@ _Senario:_
 
 So, here's the setup: I've created a new deployment called test-network-policy in our Kubernetes cluster. This deployment mimics the behavior of the load generator, generating HTTP requests to stress-test our application just like the load generator did. However, it has a different name and selector.
 
-Now, the goal here is to test our network policy (notes-app-network-policy) to ensure it's configured correctly. We want to verify that only pods labeled app: load-generator or app: test-network-policy can communicate with our notes-app pods, while all other traffic is blocked.
+Now, the goal here is to test our network policy (notes-app-network-policy) to ensure it's configured correctly. We want to verify that only pods labeled app: load-generator  can communicate with our notes-app pods, while all other traffic is blocked.
 
 We'll capture the logs from the pods of the test-network-policy deployment to see the HTTP requests being sent to our notes-app pods. These logs should confirm that the test-network-policy pods are blocked : and notes-app is unreacheable
 
