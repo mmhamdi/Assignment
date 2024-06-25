@@ -542,8 +542,6 @@ $ ./get_helm.sh
 
 4. **Pipeline Stages:**
 
-4. **Pipeline Stages:**
-
 The Jenkinsfile defines several stages to automate the CI/CD process:
 
 - **Clone and Build:**
